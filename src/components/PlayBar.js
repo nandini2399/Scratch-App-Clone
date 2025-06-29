@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "./Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { runAllSprites } from "../utils/animationThunks";
 import { collisionWatcher } from "../utils/collisionWatcher";
@@ -9,6 +10,11 @@ export default function PlayBar(){
     const running = useSelector((s)=>
         s.sprites.sprites.some((sp)=>sp.isAnimating)
     )
+
+    const selectedSprite = useSelector((s) => {
+        const id = s.sprites.selectedSpriteId;
+        return s.sprites.sprites.find((sp) => sp.id === id);
+    });
 
     const handlePlay = () =>{
         dispatch(runAllSprites())
@@ -22,7 +28,7 @@ export default function PlayBar(){
             disabled={running}
             className={`px-4 py-1 rounded text-white
             ${running ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}>
-                ▶️ Play
+               ▶️ Play
             </button>
             <button
                 onClick={() => dispatch(resetSprites())}
@@ -31,6 +37,12 @@ export default function PlayBar(){
                 🔄 Reset
             </button>
             {running && <span className="text-sm">Running... </span>}
+            {selectedSprite && (
+                <div className="flex items-center gap-2 text-sm ml-auto">
+                <span>➡️ x&nbsp;<span className="m-2 p-2 border-r-2 bg-blue-200">{Math.round(selectedSprite.position.x)}</span></span>
+                <span>⬆️ y&nbsp;<span className="m-2 p-2 border-r-2 bg-blue-200">{Math.round(selectedSprite.position.y)}</span></span>
+                </div>
+            )}
         </div>
     )
 }

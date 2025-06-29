@@ -6,7 +6,7 @@ const initialState = {
             id: heroId,//nanoid(),
             name:"Cat",
             spId:"cat",
-            position: {x:90,y:250},
+            position: {x:80,y:250},
             rotation: 0,
             blocks: [],
             looks:{ sayText:'', thinkText:''},

@@ -10,7 +10,7 @@ export default function Sidebar() {
       <div className="font-bold"> {"Events"} </div>
       <div className="flex flex-row flex-wrap bg-yellow-500 text-white px-2 py-1 my-2 text-sm cursor-pointer">
         {"When "}
-        <Icon name="flag" size={15} className="text-green-600 mx-2" />
+       ▶️
         {"clicked"}
       </div>
       <div className="flex flex-row flex-wrap bg-yellow-500 text-white px-2 py-1 my-2 text-sm cursor-pointer">
@@ -19,7 +19,7 @@ export default function Sidebar() {
       <div className="font-bold"> {"Motion"} </div>
       <TemplateBlock
         id="move-template"
-        baseData={{ type: "move", value: 50 }}
+        baseData={{ type: "move", value: 20 }}
         inputs={[{ key: "value", type: "text", width: 50 }]}
         className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
         renderLabel={(v) => <>Move</>}
@@ -38,7 +38,7 @@ export default function Sidebar() {
 
        <TemplateBlock
         id="goto-template"
-        baseData={{ type: "goto", x: 0, y: 0 }}
+        baseData={{ type: "goto", x: 80, y: 250 }}
         inputs={[
           { key: "x", type: "text", width: 50 },
           { key: "y", type: "text", width: 50 },
@@ -80,43 +80,6 @@ export default function Sidebar() {
         renderLabel={() => <>Think</>}
         suffix={() => <> seconds</>}
       />
-      
-      {/* <DraggableBlock
-        data={{id:'turn15', type:"turn",value:15}}
-        className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
-        >
-        Turn
-        <Icon name="undo" size={15} className="text-white mx-2" />
-        <input className="mx-2 w-12 h-6 p-2 border-black border-2" type={Number} /> degrees
-      </DraggableBlock>
-      
-      <DraggableBlock
-        data={{id:'goto',type:"goto",value:25}}
-        className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
-        >
-        Go to
-        <input className="mx-2 w-12 h-6 p-2 border-black border-2" type={Number} /> x
-         <input className="mx-2 w-12 h-6 p-2 border-black border-2" type={Number} /> y
-      </DraggableBlock>
-
-      <div className="font-bold"> {"Looks"} </div>
-      <DraggableBlock
-        data={{id:'say',type:"say",sayText:"Hi",seconds:2}}
-        className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
-        >
-        Say
-        <input className="mx-2 w-24 h-6 p-2 py-1 border-black border-2" type={Text} /> for
-         <input className="mx-2 w-12 h-6 p-2 border-black border-2" type={Number} /> seconds
-      </DraggableBlock>
-
-      <DraggableBlock
-        data={{id:'think',type:"think",thinkText:"Hi",seconds:2}}
-        className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
-        >
-        Think 
-        <input className="mx-2 w-24 h-6 p-2 py-1 border-black border-2" type={Text} /> for
-         <input className="mx-2 w-12 h-6 p-2 border-black border-2" type={Number} /> seconds
-      </DraggableBlock> */}
     </div>
   
     

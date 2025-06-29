@@ -10,6 +10,7 @@ const SpriteBar = () =>{
     const dispatch = useDispatch()
 
     const [showDropDown,setShowDropDown] = useState(false)
+    const optionById = (id) => spriteOptions.find((o) => o.id === id);
 
     function handleAdd(option){
         console.log("Debug"+option.id)
@@ -21,32 +22,37 @@ const SpriteBar = () =>{
       <aside className="border-r-2 border-green-500 p-2 bg-gray-50">
         <h3>Sprites</h3>
         <div className="flex flex-wrap gap-2">
-          {sprites.map((sp) => (
-                <div className="relative inline-block">
-               
-                <button
-                    key={sp.id}
-                    onClick={() => dispatch(selectSprite(sp.id))}
-                    className={`inline-flex items-center px-3 pr-10 py-2 rounded-md
-                    ${
-                        sp.id === selected
-                        ? "bg-indigo-600 text-white"
-                        : "bg-gray-300 hover:bg-gray-200"
-                    }`}
-                >
-                    {sp.name}
-                </button>
-
-                <button
-                    onClick={() => dispatch(deleteSprite({spriteId:sp.id}))}
-                    className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2
-                bg-white/90 hover:bg-red-50 hover:text-white
-                rounded-full p-0.5 text-xs shadow"
-                >
-                    ❌
-                </button>
-                </div>
-          ))}
+  {sprites.map((sp) => {
+    const opt = optionById(sp.spId)
+    return (
+      <div className="relative inline-block" key={sp.id}>
+        <button
+          onClick={() => dispatch(selectSprite(sp.id))}
+          className={`inline-flex items-center px-3 pr-10 py-2 rounded-md
+            ${
+              sp.id === selected
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-300 hover:bg-gray-200"
+            }`}
+        >
+          {opt?.component}
+          {sp.name}
+        </button>
+        <button
+          onClick={() =>
+            dispatch(deleteSprite({ spriteId: sp.id }))
+          }
+          className="absolute -top-2 -right-2
+            bg-red-500 hover:bg-red-600 text-white
+            rounded-full p-1 text-xs shadow-md
+            w-5 h-5 flex items-center justify-center"
+        >
+          ×
+        </button>
+      </div>
+                );
+                
+})}
         </div>
 
         <button

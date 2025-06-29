@@ -17,7 +17,7 @@ export default function MidArea({blocks}) {
   
   return (
   <div ref={setNodeRef}
-  className={`flex-1 h-full overflow-auto ${isOver?"bg-green-50":""}`}>
+  className={`flex-1 h-full overflow-auto bg-gray-50 ${isOver?"bg-green-50":""}`}>
     {selectedSprite.blocks.map((b) => (
         <Block key={b.id} b={b} spriteId={selectedSprite.id}/>
       ))}

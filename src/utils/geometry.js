@@ -1,6 +1,6 @@
 
 export const areSpritesColliding = (a, b) => {
-  const buffer = 2;
+  const buffer = 0;
 
   const halfAw = a.hitbox.w / 2 + buffer;
   const halfAh = a.hitbox.h / 2 + buffer;
