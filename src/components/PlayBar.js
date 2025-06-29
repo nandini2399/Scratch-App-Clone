@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { runAllSprites } from "../utils/animationThunks";
 import { collisionWatcher } from "../utils/collisionWatcher";
+import { resetSprites } from "../utils/spritesSlice";
 
 export default function PlayBar(){
     const dispatch = useDispatch();
@@ -22,6 +23,12 @@ export default function PlayBar(){
             className={`px-4 py-1 rounded text-white
             ${running ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}>
                 ▶️ Play
+            </button>
+            <button
+                onClick={() => dispatch(resetSprites())}
+                className="mx-2 px-4 py-1 rounded bg-yellow-600 hover:bg-yellow-700 text-white"
+            >
+                🔄 Reset
             </button>
             {running && <span className="text-sm">Running... </span>}
         </div>

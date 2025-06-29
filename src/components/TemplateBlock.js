@@ -53,7 +53,7 @@ export default function TemplateBlock({
           className={`mx-1 h-6 px-1 text-black border border-gray-400 rounded`}
           style={{ width: inp.width }}
         />
-      ))},
+      ))}
       {suffix?suffix(vals):null}
     </div>
   );

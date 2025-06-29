@@ -19,19 +19,19 @@ export default function Sidebar() {
       <div className="font-bold"> {"Motion"} </div>
       <TemplateBlock
         id="move-template"
-        baseData={{ type: "move", value: 10 }}
-        inputs={[{ key: "value", type: "number", width: 50 }]}
+        baseData={{ type: "move", value: 50 }}
+        inputs={[{ key: "value", type: "text", width: 50 }]}
         className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
         renderLabel={(v) => <>Move</>}
       />
       <TemplateBlock
         id="turn-template"
-        baseData={{ type: "turn", value: 15 }}
-        inputs={[{ key: "value", type: "number", width: 50 }]}
+        baseData={{ type: "turn", value: 90 }}
+        inputs={[{ key: "value", type: "text", width: 50 }]}
         className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
         renderLabel={(v) => (
           <>
-            Turn <Icon name="undo" size={14} className="mx-1" />
+            Turn
           </>
         )}
       />
@@ -40,8 +40,8 @@ export default function Sidebar() {
         id="goto-template"
         baseData={{ type: "goto", x: 0, y: 0 }}
         inputs={[
-          { key: "x", type: "number", width: 50 },
-          { key: "y", type: "number", width: 50 },
+          { key: "x", type: "text", width: 50 },
+          { key: "y", type: "text", width: 50 },
         ]}
         className="flex flex-row flex-wrap bg-blue-500 text-white px-2 py-1 my-2 text-sm cursor-pointer"
         renderLabel={() => <>Go&nbsp;to</>}

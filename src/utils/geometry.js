@@ -1,9 +1,11 @@
 
 export const areSpritesColliding = (a, b) => {
-  const halfAw = a.hitbox.w / 2;
-  const halfAh = a.hitbox.h / 2;
-  const halfBw = b.hitbox.w / 2;
-  const halfBh = b.hitbox.h / 2;
+  const buffer = 2;
+
+  const halfAw = a.hitbox.w / 2 + buffer;
+  const halfAh = a.hitbox.h / 2 + buffer;
+  const halfBw = b.hitbox.w / 2 + buffer;
+  const halfBh = b.hitbox.h / 2 + buffer;
 
   const aLeft   = a.position.x - halfAw;
   const aRight  = a.position.x + halfAw;

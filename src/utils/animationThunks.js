@@ -1,4 +1,3 @@
-
 import {
     updateSpriteRotation,
     updateSpritePosition,
@@ -19,12 +18,14 @@ export const runAllSprites =() => async(dispatch,getState) => {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export const runOneSprite = (spriteId) => async(dispatch,getState) =>{
+export const runOneSprite = (spriteId, forceStart = false, ignoreCollisionToken = false) => async(dispatch,getState) =>{
     const firstRead = getState().sprites.sprites.find(s => s.id === spriteId);
-   if (!firstRead || firstRead.isAnimating) return;
-
-   const cToken = firstRead.collisionToken;
+   if (!firstRead || (firstRead.isAnimating && !forceStart)) return;
    
+   if (forceStart && firstRead.isAnimating) {
+       dispatch(setAnimating({ spriteId, value: false }));
+       await new Promise(resolve => setTimeout(resolve, 10));
+   }
 
     const state = getState().sprites;
     const sprite = state.sprites.find((s)=>s.id===spriteId);
@@ -32,6 +33,9 @@ export const runOneSprite = (spriteId) => async(dispatch,getState) =>{
     if(!sprite || sprite.blocks.length===0) return;
 
     dispatch(setAnimating({ spriteId, value: true }))
+    
+    const latestSprite = getState().sprites.sprites.find(s => s.id === spriteId);
+    const cToken = latestSprite?.collisionToken ?? 0;
 
     let {x,y} = sprite.position;
     let angle = sprite.rotation;
@@ -42,15 +46,36 @@ export const runOneSprite = (spriteId) => async(dispatch,getState) =>{
     //for(const block of sprite.blocks){
     while(true){
         const spriteLive = getState().sprites.sprites.find(s => s.id === spriteId);
-        if (!spriteLive || spriteLive.collisionToken !== cToken) break;   
+        if (!spriteLive) break;
+        
+        if (!ignoreCollisionToken && spriteLive.collisionToken !== cToken) {
+            break;
+        }
         const block = spriteLive?.blocks[index];
         if (!block) break;
 
         if(block.type === 'move'){
             const rad = (angle * Math.PI) / 180;
-            x += block.value * Math.cos(rad);
-            y += block.value * Math.sin(rad);
-            dispatch(updateSpritePosition({ spriteId, position: { x, y } }));
+            const totalSteps = Math.abs(block.value);
+            const direction = block.value > 0 ? 1 : -1;
+            const STEP_SIZE = 5;
+            const chunks = Math.ceil(totalSteps / STEP_SIZE);
+            
+            for(let i = 0; i < chunks; i++) {
+                const currentSprite = getState().sprites.sprites.find(s => s.id === spriteId);
+                if (!currentSprite) break;
+                
+                if (!ignoreCollisionToken && currentSprite.collisionToken !== cToken) break;
+                
+                const remainingSteps = totalSteps - (i * STEP_SIZE);
+                const stepSize = Math.min(STEP_SIZE, remainingSteps);
+                
+                x += direction * stepSize * Math.cos(rad);
+                y += direction * stepSize * Math.sin(rad);
+                dispatch(updateSpritePosition({ spriteId, position: { x, y } }));
+                
+                await sleep(30);
+            }
         }
         else if(block.type ==='turn'){
             angle+=block.value
@@ -85,4 +110,3 @@ export const runOneSprite = (spriteId) => async(dispatch,getState) =>{
     dispatch(setAnimating({ spriteId, value: false }))
     return true;
 }
-

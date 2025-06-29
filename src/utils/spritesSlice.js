@@ -6,7 +6,7 @@ const initialState = {
             id: heroId,//nanoid(),
             name:"Cat",
             spId:"cat",
-            position: {x:250,y:250},
+            position: {x:90,y:250},
             rotation: 0,
             blocks: [],
             looks:{ sayText:'', thinkText:''},
@@ -23,7 +23,7 @@ const spritesSlice = createSlice({
     initialState,
     reducers:{
         addSprite: (state,action)=>{
-            const OFFSET = 100;
+            const OFFSET = 150;
             const count = state.sprites.length
             const CAT_SPECS  = { w: 65, h: 70 };
             const BALL_SPECS = { w: 60, h: 60 };
@@ -33,20 +33,52 @@ const spritesSlice = createSlice({
                 name: action.payload.name || 'New Sprite',
                 spId: action.payload.spId,
                 position: {
-                    x:60 + OFFSET *(count%5),
-                    y:60 + OFFSET *Math.floor(count/5)
+                    x:100 + OFFSET *(count%5),
+                    y:250 + OFFSET *Math.floor(count/5)
                 },
                 rotation:0,
                 blocks:[],
                 looks:{ sayText:'', thinkText:''},
                 isAnimating: false,
-                hitbox : hitb
+                hitbox : hitb,
+                collisionToken:0
             }
             state.sprites.push(newSprite);
         },
 
         selectSprite: (state,action) =>{
             state.selectedSpriteId = action.payload
+        },
+
+        deleteSprite: (state,action) =>{
+            const {spriteId} = action.payload
+            if(state.sprites.length===1)    return;
+             state.sprites = state.sprites.filter((sp) => sp.id !== spriteId);
+
+             if (state.selectedSpriteId === spriteId) {
+                state.selectedSpriteId = state.sprites.length
+                ? state.sprites[0].id       
+                : null;                     
+            }
+        },
+
+        resetSprites: (state) => {
+            const OFFSET = 250;           
+
+            state.sprites.forEach((sp, i) => {
+                sp.position = {
+                x: 80 + OFFSET * (i % 5),
+                y: 250 + OFFSET * Math.floor(i / 5),
+                };
+                sp.rotation   = 0;
+                sp.blocks     = [];          
+                sp.looks.sayText   = '';
+                sp.looks.thinkText = '';
+                sp.isAnimating = false;
+                sp.runToken    = 0;         
+            });
+
+            state.selectedSpriteId = state.sprites.length ? state.sprites[0].id : null;
         },
 
         addBlockToSprite: (state, action)=>{
@@ -137,6 +169,8 @@ export const {
   clearBlocks,
   swapSpriteAnimations,
   bumpCollisionToken,
+  deleteSprite,
+  resetSprites
 } = spritesSlice.actions;
 
 export default spritesSlice.reducer;
