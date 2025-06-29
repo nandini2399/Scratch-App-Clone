@@ -7,7 +7,7 @@ const Block = ({b,spriteId}) =>{
 
     if(!b) return null;
     const handleRemoveBlock = ()=>{
-      console.log("Debug"+b.id)
+      //console.log("Debug"+b.id)
       dispatch(removeBlockFromSprite({spriteId,blockId:b.id}))
     }
 

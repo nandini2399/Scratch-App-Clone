@@ -82,7 +82,7 @@ const Sprite = ({sprite})=>{
   const dispatch = useDispatch()
   const dragData = useRef(null);
   const containerRef = useRef(null);
-  console.log("Preview"+spId)
+  //console.log("Preview"+spId)
   const spriteOption = spriteOptions.find((opt)=>opt.id===spId);
 
   const onPointerDown = (e) => {

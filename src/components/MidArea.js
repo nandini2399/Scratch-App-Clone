@@ -13,7 +13,7 @@ export default function MidArea({blocks}) {
   const selectedSprite = useSelector(state =>
     state.sprites.sprites.find(s => s.id === selectedSpriteId)
   )
-    console.log(selectedSprite)
+    //console.log(selectedSprite)
   
   return (
   <div ref={setNodeRef}

@@ -19,7 +19,7 @@ import PlayBar from "./components/PlayBar";
 export default function App() {
   
   const selectedSpriteId = useSelector(state=>state.sprites.selectedSpriteId)
-  console.log(selectedSpriteId);
+  //console.log(selectedSpriteId);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {

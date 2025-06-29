@@ -13,7 +13,7 @@ const SpriteBar = () =>{
     const optionById = (id) => spriteOptions.find((o) => o.id === id);
 
     function handleAdd(option){
-        console.log("Debug"+option.id)
+        //console.log("Debug"+option.id)
        dispatch(addSprite({spId:option.id,name:option.name,image:option.image}))
        setShowDropDown(false)
     }
